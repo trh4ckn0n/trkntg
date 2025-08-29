@@ -8,6 +8,9 @@ const GROUP_CHAT = process.env.GROUP_CHAT;
 const FACEBOOK_GROUP = process.env.FACEBOOK_GROUP;
 const POLLING_INTERVAL = 5 * 60 * 1000; // 5 min
 const PER_PAGE = 10;
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // ---- INIT BOT ----
 const bot = new TelegramBot(TOKEN, { polling: true });
@@ -189,3 +192,5 @@ bot.onText(/\/info/, (msg) => {
 setInterval(checkNewRepos, POLLING_INTERVAL);
 
 console.log("🤖 Bot Telegram trh4ckn0n ultra abouti actif !");
+app.get('/', (req, res) => res.send('🤖 Bot Telegram actif !'));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
