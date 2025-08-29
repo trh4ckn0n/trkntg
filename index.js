@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
-
+const express = require('express');
+const app = express();
 // ---- CONFIG AVEC VARIABLES D'ENVIRONNEMENT ----
 const TOKEN = process.env.TOKEN;
 const GITHUB_USER = process.env.GITHUB_USER;
@@ -8,8 +9,6 @@ const GROUP_CHAT = process.env.GROUP_CHAT;
 const FACEBOOK_GROUP = process.env.FACEBOOK_GROUP;
 const POLLING_INTERVAL = 5 * 60 * 1000; // 5 min
 const PER_PAGE = 10;
-const express = require('express');
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ---- INIT BOT ----
