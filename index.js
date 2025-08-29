@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 const fs = require("fs");
 
 // Ton token
-const ADMIN_CHAT_ID = "trknpub"; // ID du groupe/canal où tu veux recevoir les messages
+const ADMIN_CHAT_ID = process.env.CHATID; // ID du groupe/canal où tu veux recevoir les messages
 // ---- INIT BOT ----
 const bot = new TelegramBot(TOKEN, { polling: true });
 
