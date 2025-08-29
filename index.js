@@ -156,6 +156,7 @@ bot.onText(/\/help/, (msg) => {
 /help  - Afficher ce message
 /info  - Infos sur le groupe et le bot
 /links - some links of trhacknon's accounts
+/yep [message] - envoyer un message à l'admin
   `;
   const buttons = {
     reply_markup: {
