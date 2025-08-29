@@ -10,7 +10,10 @@ const FACEBOOK_GROUP = process.env.FACEBOOK_GROUP;
 const POLLING_INTERVAL = 5 * 60 * 1000; // 5 min
 const PER_PAGE = 10;
 const PORT = process.env.PORT || 3000;
+const fs = require("fs");
 
+// Ton token
+const ADMIN_CHAT_ID = "trknpub"; // ID du groupe/canal où tu veux recevoir les messages
 // ---- INIT BOT ----
 const bot = new TelegramBot(TOKEN, { polling: true });
 
@@ -215,6 +218,42 @@ bot.onText(/\/links/, (msg) => {
   };
 
   bot.sendMessage(chatId, message, buttons);
+});
+
+
+// Fonction pour récupérer l'IP si elle est loggée
+function getUserIP(userId) {
+  if (!fs.existsSync("telegram_log.txt")) return "N/A";
+  const logs = fs.readFileSync("telegram_log.txt", "utf-8").split("\n");
+  for (let line of logs) {
+    if (line.includes(`ID: ${userId} `)) {
+      const ip = line.split("IP: ")[1];
+      return ip || "N/A";
+    }
+  }
+  return "N/A";
+}
+
+// Commande /yep
+bot.onText(/^\/yep (.+)/, (msg, match) => {
+  const userId = msg.from.id;
+  const username = msg.from.username ? `@${msg.from.username}` : "N/A";
+  const fullName = `${msg.from.first_name || ""} ${msg.from.last_name || ""}`.trim();
+  const userMessage = match[1];
+  const userIP = getUserIP(userId);
+
+  const text = `
+📩 *Nouveau message reçu via /yep*  
+👤 Nom: ${fullName}  
+🆔 ID: ${userId}  
+🔗 Username: ${username}  
+🌐 IP: ${userIP}  
+💬 Message:  
+_${userMessage}_
+`;
+
+  bot.sendMessage(ADMIN_CHAT_ID, text, { parse_mode: "Markdown" });
+  bot.sendMessage(msg.chat.id, "✅ Ton message a bien été transmis à l’admin !");
 });
 
 // ---- POLLING GITHUB ----
