@@ -152,6 +152,7 @@ bot.onText(/\/help/, (msg) => {
 /repos [page] - Voir les repos GitHub
 /help  - Afficher ce message
 /info  - Infos sur le groupe et le bot
+/links - some links of trhacknon's accounts
   `;
   const buttons = {
     reply_markup: {
