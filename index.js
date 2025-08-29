@@ -15,10 +15,13 @@ const bot = new TelegramBot(TOKEN, { polling: true });
 // ---- STOCKAGE DES REPOS EXISTANTS ----
 let knownRepos = new Set();
 
-// ---- FONCTION POUR CHERCHER TOUS LES REPOS ----
 async function fetchRepos() {
   try {
-    const response = await axios.get(`https://api.github.com/users/${GITHUB_USER}/repos?sort=created&per_page=100`);
+    const response = await axios.get(`https://api.github.com/users/${GITHUB_USER}/repos?sort=created&per_page=100`, {
+      headers: {
+        Authorization: `token ${process.env.GITHUB_TOKEN}`
+      }
+    });
     return response.data;
   } catch (err) {
     console.error("Erreur GitHub :", err.message);
