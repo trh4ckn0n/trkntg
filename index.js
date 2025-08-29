@@ -187,6 +187,35 @@ bot.onText(/\/info/, (msg) => {
   bot.sendMessage(chatId, infoMessage, buttons);
 });
 
+// ---- COMMANDE /LINKS ----
+bot.onText(/\/links/, (msg) => {
+  const chatId = msg.chat.id;
+
+  const message = `
+🔗 Voici tous mes liens utiles :
+
+• Groupe Facebook : [Lien Facebook](${process.env.FACEBOOK_GROUP})
+• Groupe Telegram : [Lien Telegram](https://t.me/trknpub)
+• GitHub : [Mes repos GitHub](https://github.com/trh4ckn0n?tab=repositories)
+• Streamlit : [Mes projets Streamlit](https://share.streamlit.io/user/trh4ckn0n)
+  `;
+
+  const buttons = {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: "Groupe Facebook", url: process.env.FACEBOOK_GROUP }],
+        [{ text: "Groupe Telegram", url: "https://t.me/trknpub" }],
+        [{ text: "GitHub", url: "https://github.com/trh4ckn0n?tab=repositories" }],
+        [{ text: "Streamlit", url: "https://share.streamlit.io/user/trh4ckn0n" }],
+      ]
+    },
+    parse_mode: 'Markdown',
+    disable_web_page_preview: false
+  };
+
+  bot.sendMessage(chatId, message, buttons);
+});
+
 // ---- POLLING GITHUB ----
 setInterval(checkNewRepos, POLLING_INTERVAL);
 
